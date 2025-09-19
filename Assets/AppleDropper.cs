@@ -3,18 +3,18 @@ using System.Collections;
 
 public class AppleDropper : MonoBehaviour
 {
-    [Header("ƻ�������")]
-    public GameObject applePrefab;           // ����� Apple.prefab
-    public Transform[] spawnPoints;          // ��ƻ���㣨����һ����
+    [Header("AppleSpawn")]
+    public GameObject applePrefab;           
+    public Transform[] spawnPoints;         
 
-    [Header("�������")]
-    public float intervalMin = 0.8f;         // ��̼��
-    public float intervalMax = 1.6f;         // ����
+    [Header("DropInterval")]
+    public float intervalMin = 0.8f;         
+    public float intervalMax = 1.6f;         
     public bool randomizePointEachTime = true;
 
-    [Header("���ٶ�(��ѡ)")]
+    [Header("Speed")]
     public bool giveInitialDownSpeed = false;
-    public float initialDownSpeed = 2f;      // ��һ�����³��ٶ�����������
+    public float initialDownSpeed = 2f;      
 
     void OnValidate()
     {
@@ -48,23 +48,23 @@ public class AppleDropper : MonoBehaviour
             ? spawnPoints[Random.Range(0, spawnPoints.Length)]
             : spawnPoints[0];
 
-        // ����ƻ����ע�ⲻҪ�� parent������ƻ���Ͳ���������ƶ�
+        
         GameObject apple = Instantiate(applePrefab, p.position, Quaternion.identity);
 
-        // ��ѡ����һ�����³��ٶȣ�2D/3D ͨ�ԣ�
+        
         if (giveInitialDownSpeed)
         {
-            // 3D ����
+            
             var rb3 = apple.GetComponent<Rigidbody>();
             if (rb3) rb3.linearVelocity = Vector3.down * initialDownSpeed;
 
-            // 2D ����
+            
             var rb2 = apple.GetComponent<Rigidbody2D>();
             if (rb2) rb2.linearVelocity = Vector2.down * initialDownSpeed;
         }
     }
 
-    // ��ѡ���ڱ༭���л�������
+    
     void OnDrawGizmosSelected()
     {
         if (spawnPoints == null) return;
